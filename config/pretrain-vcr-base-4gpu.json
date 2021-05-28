@@ -1,0 +1,78 @@
+{ "attention_probs_dropout_prob": 0.1,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "max_position_embeddings": 512,
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "type_vocab_size": 4,
+  "vocab_size": 28996,
+    "model_config": "/src/config/pretrain-vcr-base-4gpu.json",
+    "checkpoint": "/pretrain/uniter-base-vcr_2nd_stage.pt",
+    "output_dir": "/outputs/pretrain",
+    "mrm_prob": 0.15,
+    "max_txt_len": 220,
+    "conf_th": 0.2,
+    "max_bb": 100,
+    "min_bb": 10,
+    "num_bb": 36,
+    "train_batch_size": 6144,
+    "val_batch_size": 8000,
+    "gradient_accumulation_steps": 4,
+    "learning_rate": 3e-05,
+    "valid_steps": 2000,
+    "num_train_steps": 45000,
+    "optim": "adamw",
+    "betas": [
+        0.9,
+        0.98
+    ],
+    "dropout": 0.1,
+    "weight_decay": 0.01,
+    "grad_norm": -1,
+    "warmup_steps": 4500,
+    "seed": 42,
+    "fp16": true,
+    "n_workers": 4,
+    "pin_mem": true,
+    "train_datasets": [
+        {
+            "name": "vcr",
+            "db": [
+                "./pretrain/txt_db/vcr_train.db/"
+            ],
+            "img": [
+                "./pretrain/img_db/vcr_gt_train/;/pretrain/img_db/vcr_train/"
+            ],
+            "tasks": [
+                "mlm",
+                "mrfr",
+                "mrckl"
+            ],
+            "mix_ratio": [
+                2,
+                1,
+                1
+            ]
+        }
+    ],
+    "val_datasets": [
+        {
+            "name": "vcr",
+            "db": [
+                "./pretrain/txt_db/vcr_train.db/"
+            ],
+            "img": [
+                "./pretrain/img_db/vcr_gt_train/;/pretrain/img_db/vcr_train/"
+            ],
+            "tasks": [
+                "mlm",
+                "mrfr",
+                "mrckl"
+            ]
+        }
+    ],
+    "rank": 0
+}
